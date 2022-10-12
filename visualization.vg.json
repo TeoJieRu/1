@@ -5,8 +5,8 @@
   "width": 700,
   "height": 380,
   "title": {
-    "text": "Forest oCoverage of Countries in 2020",
-    "fontSize": 30,
+    "text": "Forest Coverage of Countries in 2020",
+    "fontSize": 27,
     "frame": "group"
   },
   "data": [
