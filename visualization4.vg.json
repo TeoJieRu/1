@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "background": "white",
   "padding": 5,
-  "width": 350,
-  "height": 180,
+  "width": 380,
+  "height": 190,
   "title": {"text": "Forest Area in World", "frame": "group"},
   "style": "cell",
   "data": [
