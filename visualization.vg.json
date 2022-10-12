@@ -4,11 +4,6 @@
   "padding": 5,
   "width": 700,
   "height": 380,
-  "title": {
-    "text": "Forest Coverage of Countries in 2020",
-    "fontSize": 16,
-    "frame": "group"
-  },
   "data": [
     {"name": "highlight_store"},
     {"name": "select_store"},
