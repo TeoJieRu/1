@@ -11,6 +11,7 @@ body {
 }
 
 .page {
+    height: auto;
     width: 850px;
     background-color: white;
     margin: auto;
