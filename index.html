@@ -66,12 +66,10 @@
         <div id="range_dot" class="vis-container"></div>
       </div>
       <div class="pure-u-1-2">
-        <div class="description description-right">
           <h2>Forest Coverage in the 10 most populous Countries</h2>
           <p>From this graph we can observe that Indonesia's forest coverage was decreased the most between 1990 to 2020.
             However, the forest coverage of Bangladesh, Russia and United States of America does not change much.
           </p>
-        </div>
       </div>
     </div>
     <!-- end pure grid group -->
@@ -79,11 +77,9 @@
     <!-- pure grid group -->
     <div class="pure-g">
       <div class="pure-u-1-2">
-        <div class="description description-left">
           <h2>Continental Forest Area</h2>
           <p>From this bar graph we can observe that South America's forest area was decreased the most
             and Asia's forest area was increased the most between 1990 to 2020.</p>
-        </div>
       </div>
       <div class="pure-u-1-2">
         <div id="bar" class="vis-container"></div>
@@ -97,12 +93,10 @@
         <div id="line" class="vis-container"></div>
       </div>
       <div class="pure-u-1-2">
-        <div class="description description-right">
           <h2>Forest Area in World</h2>
             <p>Overall, we can observe that the forest area in the world was decreased between 1990 to 2020.
               However, the forest area in the world was increased between 1999 to 2000 and between 2009 to 2011.
             </p>
-        </div>
       </div>
     </div>
       <!-- end pure grid group -->
@@ -125,7 +119,7 @@
     var specVis3 = "visualization3.vg.json";
     var specVis4 = "visualization4.vg.json";
 
-    vegaEmbed('#choropleth_map', specVis1, { "actions": false })then(function (result) {
+    vegaEmbed('#choropleth_map', specVis1, { "actions": false }).then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
@@ -133,11 +127,11 @@
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#bar', specVis1, { "actions": false }).then(function (result) {
+    vegaEmbed('#bar', specVis3, { "actions": false }).then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#line', specVis2, { "actions": false }).then(function (result) {
+    vegaEmbed('#line', specVis4, { "actions": false }).then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
   </script>
