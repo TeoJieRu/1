@@ -124,7 +124,9 @@
     var specVis3 = "visualization3.vg.json";
     var specVis4 = "visualization4.vg.json";
 
-    vegaEmbed('#choropleth_map', specVis1, { "actions": false });
+    vegaEmbed('#choropleth_map', specVis1, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
 
     vegaEmbed('#range_dot', specVis2, { "actions": false }).then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
