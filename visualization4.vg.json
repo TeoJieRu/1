@@ -4,7 +4,6 @@
   "padding": 5,
   "width": 380,
   "height": 190,
-  "title": {"text": "Forest Area in World", "frame": "group"},
   "style": "cell",
   "data": [
     {"name": "year_store"},
