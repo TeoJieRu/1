@@ -3,7 +3,7 @@
   "background": "white",
   "padding": 5,
   "width": 380,
-  "height": 230,
+  "height": 250,
   "style": "cell",
   "data": [
     {"name": "year_store"},
