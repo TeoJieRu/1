@@ -2,8 +2,8 @@
   "$schema": "https://vega.github.io/schema/vega/v5.json",
   "background": "white",
   "padding": 5,
-  "width": 350,
-  "height": 250,
+  "width": 380,
+  "height": 240,
   "style": "cell",
   "data": [
     {"name": "continent1_store"},
