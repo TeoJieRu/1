@@ -3,7 +3,7 @@
   "background": "white",
   "padding": 5,
   "width": 350,
-  "height": 270,
+  "height": 250,
   "style": "cell",
   "data": [
     {"name": "continent1_store"},
