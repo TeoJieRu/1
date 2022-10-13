@@ -4,7 +4,6 @@
   "padding": 5,
   "width": 320,
   "height": 260,
-  "title": {"text": "Continental Forest Area", "frame": "group"},
   "style": "cell",
   "data": [
     {"name": "continent1_store"},
