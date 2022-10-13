@@ -201,7 +201,7 @@
       "name": "color",
       "type": "ordinal",
       "domain": {"data": "source_0", "field": "Continent", "sort": true},
-      "range": "category"
+      "range": {"scheme": "set2"}
     }
   ],
   "axes": [
