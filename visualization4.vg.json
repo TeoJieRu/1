@@ -140,15 +140,9 @@
     {
       "name": "y",
       "type": "linear",
-      "domain": {
-        "fields": [
-          {"data": "source_0", "field": "sum_forest_area"},
-          {"data": "data_0", "field": "sum_forest_area"}
-        ]
-      },
+      "domain": [40000000, 45000000],
       "range": [{"signal": "height"}, 0],
-      "nice": true,
-      "zero": true
+      "zero": false
     }
   ],
   "axes": [
