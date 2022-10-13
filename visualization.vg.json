@@ -3,7 +3,7 @@
   "background": "white",
   "padding": 5,
   "width": 780,
-  "height": 400,
+  "height": 380,
   "data": [
     {"name": "highlight_store"},
     {"name": "select_store"},
@@ -100,7 +100,7 @@
       "value": 120,
       "bind": {
         "input": "range",
-        "min": 120,
+        "min": 130,
         "max": 240,
         "step": 10,
         "name": "Zoom: "
