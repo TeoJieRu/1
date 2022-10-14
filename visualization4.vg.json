@@ -4,9 +4,9 @@
   "padding": 5,
   "width": 400,
   "height": 220,
+  "title": {"text": "Forest Area in World", "frame": "group"},
   "style": "cell",
   "data": [
-    {"name": "year_store"},
     {
       "name": "source_0",
       "url": "https://raw.githubusercontent.com/TeoJieRu/Visualisation2/main/forest/use2.csv",
@@ -16,7 +16,13 @@
           "type": "formula",
           "expr": "datum.Area*datum.Coverage/100",
           "as": "forest_area"
-        },
+        }
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_0",
+      "transform": [
         {
           "field": "Year",
           "type": "timeunit",
@@ -33,58 +39,36 @@
       ]
     },
     {
-      "name": "data_0",
+      "name": "data_1",
       "source": "source_0",
       "transform": [
         {
           "type": "filter",
-          "expr": "(isDate(datum[\"year_Year\"]) || (isValid(datum[\"year_Year\"]) && isFinite(+datum[\"year_Year\"]))) && isValid(datum[\"sum_forest_area\"]) && isFinite(+datum[\"sum_forest_area\"])"
-        }
-      ]
-    }
-  ],
-  "signals": [
-    {
-      "name": "unit",
-      "value": {},
-      "on": [
-        {"events": "mousemove", "update": "isTuple(group()) ? group() : unit"}
-      ]
-    },
-    {
-      "name": "year",
-      "update": "vlSelectionResolve(\"year_store\", \"union\", true, true)"
-    },
-    {"name": "year_tuple"},
-    {"name": "year_tuple_fields", "value": [{"type": "E", "field": "Year"}]},
-    {
-      "name": "year_toggle",
-      "value": false,
-      "on": [
+          "expr": "indexof([time(datetime(1990, 0, 1, 0, 0, 0, 0)),time(datetime(2000, 0, 1, 0, 0, 0, 0)),time(datetime(2011, 0, 1, 0, 0, 0, 0)),time(datetime(2020, 0, 1, 0, 0, 0, 0))], time(datetime(year(datum[\"Year\"]), 0, 1, 0, 0, 0, 0))) !== -1"
+        },
         {
-          "events": {"merge": [{"source": "view", "type": "click"}]},
-          "update": "event.shiftKey"
-        }
-      ]
-    },
-    {
-      "name": "year_modify",
-      "on": [
+          "field": "Year",
+          "type": "timeunit",
+          "units": ["year"],
+          "as": ["year_Year", "year_Year_end"]
+        },
         {
-          "events": {"signal": "year_tuple"},
-          "update": "modify(\"year_store\", year_toggle ? null : year_tuple, year_toggle ? null : true, year_toggle ? year_tuple : null)"
+          "type": "aggregate",
+          "groupby": ["year_Year"],
+          "ops": ["sum"],
+          "fields": ["forest_area"],
+          "as": ["sum_forest_area"]
         }
       ]
     }
   ],
   "marks": [
     {
-      "name": "layer_0_marks",
+      "name": "layer_0_layer_0_marks",
       "type": "line",
       "style": ["line"],
       "sort": {"field": "datum[\"year_Year\"]"},
-      "interactive": true,
-      "from": {"data": "source_0"},
+      "from": {"data": "data_0"},
       "encode": {
         "update": {
           "stroke": {"value": "#4c78a8"},
@@ -95,18 +79,14 @@
             "signal": "\"Year: \" + (timeFormat(datum[\"year_Year\"], timeUnitSpecifier([\"year\"], {\"year-month\":\"%b %Y \",\"year-month-date\":\"%b %d, %Y \"}))) + \"; Forest Area (km2): \" + (format(datum[\"sum_forest_area\"], \"\"))"
           },
           "x": {"scale": "x", "field": "year_Year"},
-          "y": {"scale": "y", "field": "sum_forest_area"},
-          "defined": {
-            "signal": "isValid(datum[\"year_Year\"]) && isFinite(+datum[\"year_Year\"]) && isValid(datum[\"sum_forest_area\"]) && isFinite(+datum[\"sum_forest_area\"])"
-          }
+          "y": {"scale": "y", "field": "sum_forest_area"}
         }
       }
     },
     {
-      "name": "layer_1_marks",
+      "name": "layer_0_layer_1_marks",
       "type": "symbol",
       "style": ["point"],
-      "interactive": true,
       "from": {"data": "data_0"},
       "encode": {
         "update": {
@@ -119,8 +99,55 @@
           "description": {
             "signal": "\"Year: \" + (timeFormat(datum[\"year_Year\"], timeUnitSpecifier([\"year\"], {\"year-month\":\"%b %Y \",\"year-month-date\":\"%b %d, %Y \"}))) + \"; Forest Area (km2): \" + (format(datum[\"sum_forest_area\"], \"\"))"
           },
-          "x": {"scale": "x", "field": "year_Year"},
-          "y": {"scale": "y", "field": "sum_forest_area"}
+          "x": [
+            {
+              "test": "!isValid(datum[\"year_Year\"]) || !isFinite(+datum[\"year_Year\"])",
+              "value": 0
+            },
+            {"scale": "x", "field": "year_Year"}
+          ],
+          "y": [
+            {
+              "test": "!isValid(datum[\"sum_forest_area\"]) || !isFinite(+datum[\"sum_forest_area\"])",
+              "field": {"group": "height"}
+            },
+            {"scale": "y", "field": "sum_forest_area"}
+          ]
+        }
+      }
+    },
+    {
+      "name": "layer_1_marks",
+      "type": "text",
+      "style": ["text"],
+      "from": {"data": "data_1"},
+      "encode": {
+        "update": {
+          "align": {"value": "center"},
+          "baseline": {"value": "alphabetic"},
+          "fontSize": {"value": 11},
+          "fill": {"value": "black"},
+          "tooltip": {
+            "signal": "{\"Year\": timeFormat(datum[\"year_Year\"], timeUnitSpecifier([\"year\"], {\"year-month\":\"%b %Y \",\"year-month-date\":\"%b %d, %Y \"})), \"Forest Area (km2)\": format(datum[\"sum_forest_area\"], \".2d\")}"
+          },
+          "description": {
+            "signal": "\"Year: \" + (timeFormat(datum[\"year_Year\"], timeUnitSpecifier([\"year\"], {\"year-month\":\"%b %Y \",\"year-month-date\":\"%b %d, %Y \"}))) + \"; Forest Area (km2): \" + (format(datum[\"sum_forest_area\"], \"\")) + \"; Sum of forest_area: \" + (format(datum[\"sum_forest_area\"], \".2d\"))"
+          },
+          "x": [
+            {
+              "test": "!isValid(datum[\"year_Year\"]) || !isFinite(+datum[\"year_Year\"])",
+              "value": 0
+            },
+            {"scale": "x", "field": "year_Year"}
+          ],
+          "y": [
+            {
+              "test": "!isValid(datum[\"sum_forest_area\"]) || !isFinite(+datum[\"sum_forest_area\"])",
+              "field": {"group": "height"}
+            },
+            {"scale": "y", "field": "sum_forest_area"}
+          ],
+          "text": {"signal": "format(datum[\"sum_forest_area\"], \".2d\")"}
         }
       }
     }
@@ -131,8 +158,8 @@
       "type": "time",
       "domain": {
         "fields": [
-          {"data": "source_0", "field": "year_Year"},
-          {"data": "data_0", "field": "year_Year"}
+          {"data": "data_0", "field": "year_Year"},
+          {"data": "data_1", "field": "year_Year"}
         ]
       },
       "range": [0, {"signal": "width"}]
