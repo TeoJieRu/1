@@ -3,7 +3,7 @@
   "description": "forest area porpotion of continent",
   "background": "white",
   "padding": 5,
-  "width": 400,
+  "width": 430,
   "height": 300,
   "data": [
     {
@@ -95,7 +95,7 @@
       "from": {"data": "data_1"},
       "encode": {
         "update": {
-          "outerRadius": {"value": 110},
+          "outerRadius": {"value": 130},
           "fill": {"scale": "color", "field": "Continent"},
           "tooltip": {
             "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Forest Area Porpotion(%)\": format(datum[\"sum_percent\"], \".2f\")}"
