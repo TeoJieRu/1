@@ -3,7 +3,7 @@
   "description": "forest area of the 10 least populous countries",
   "background": "white",
   "padding": 5,
-  "width": 420,
+  "width": 430,
   "height": 260,
   "style": "cell",
   "data": [
