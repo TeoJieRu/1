@@ -3,7 +3,7 @@
   "description": "forest area of the 10 largest countries",
   "background": "white",
   "padding": 5,
-  "width": 420,
+  "width": 405,
   "height": 260,
   "style": "cell",
   "data": [
