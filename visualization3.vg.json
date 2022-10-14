@@ -3,7 +3,7 @@
   "description": "forest area of the 10 least populous countries",
   "background": "white",
   "padding": 5,
-  "width": 520,
+  "width": 420,
   "height": 260,
   "style": "cell",
   "data": [
@@ -103,7 +103,7 @@
         "update": {
           "align": {"value": "left"},
           "baseline": {"value": "alphabetic"},
-          "fontSize": {"value": 11.5},
+          "fontSize": {"value": 12.5},
           "fill": {"value": "black"},
           "tooltip": {
             "signal": "{\"Country\": isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"], \"Forest Area (km2)\": format(datum[\"sum_sum_area\"], \".2d\")}"
