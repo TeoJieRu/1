@@ -124,7 +124,7 @@
       "encode": {
         "update": {
           "align": {"value": "center"},
-          "baseline": {"value": "alphabetic"},
+          "baseline": {"value": "line-bottom"},
           "fontSize": {"value": 11},
           "fill": {"value": "black"},
           "tooltip": {
