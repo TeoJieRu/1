@@ -1,0 +1,166 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "forest area porpotion of continent",
+  "background": "white",
+  "padding": 5,
+  "width": 400,
+  "height": 300,
+  "data": [
+    {
+      "name": "source_0",
+      "url": "https://raw.githubusercontent.com/TeoJieRu/Visualisation2/main/forest/use2.csv",
+      "format": {"type": "csv", "delimiter": ","},
+      "transform": [
+        {
+          "type": "formula",
+          "expr": "datum.Area*datum.Coverage/100",
+          "as": "forest_area"
+        },
+        {"type": "filter", "expr": "datum.Year == Year_selection"},
+        {
+          "type": "joinaggregate",
+          "as": ["sum_area"],
+          "ops": ["sum"],
+          "fields": ["forest_area"]
+        },
+        {
+          "type": "formula",
+          "expr": "datum.forest_area/datum.sum_area*100",
+          "as": "percent"
+        },
+        {
+          "type": "aggregate",
+          "groupby": ["Continent"],
+          "ops": ["sum"],
+          "fields": ["percent"],
+          "as": ["sum_percent"]
+        }
+      ]
+    },
+    {
+      "name": "data_0",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "stack",
+          "groupby": [],
+          "field": "sum_percent",
+          "sort": {"field": ["Continent"], "order": ["ascending"]},
+          "as": ["sum_percent_start", "sum_percent_end"],
+          "offset": "zero"
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"sum_percent\"]) && isFinite(+datum[\"sum_percent\"])"
+        }
+      ]
+    },
+    {
+      "name": "data_1",
+      "source": "source_0",
+      "transform": [
+        {
+          "type": "stack",
+          "groupby": [],
+          "field": "sum_percent",
+          "sort": {"field": ["Continent"], "order": ["ascending"]},
+          "as": ["sum_percent_start", "sum_percent_end"],
+          "offset": "zero"
+        },
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"sum_percent\"]) && isFinite(+datum[\"sum_percent\"])"
+        }
+      ]
+    }
+  ],
+  "signals": [
+    {
+      "name": "Year_selection",
+      "value": 1990,
+      "bind": {
+        "input": "range",
+        "min": 1990,
+        "max": 2020,
+        "step": 1,
+        "name": "Year :"
+      }
+    }
+  ],
+  "marks": [
+    {
+      "name": "layer_0_marks",
+      "type": "arc",
+      "style": ["arc"],
+      "from": {"data": "data_1"},
+      "encode": {
+        "update": {
+          "outerRadius": {"value": 110},
+          "fill": {"scale": "color", "field": "Continent"},
+          "tooltip": {
+            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Forest Area Porpotion(%)\": format(datum[\"sum_percent\"], \".2f\")}"
+          },
+          "description": {
+            "signal": "\"Sum of percent: \" + (format(datum[\"sum_percent\"], \"\")) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Forest Area Porpotion(%): \" + (format(datum[\"sum_percent\"], \".2f\"))"
+          },
+          "x": {"signal": "width", "mult": 0.5},
+          "y": {"signal": "height", "mult": 0.5},
+          "innerRadius": {"value": 0},
+          "startAngle": {"scale": "theta", "field": "sum_percent_end"},
+          "endAngle": {"scale": "theta", "field": "sum_percent_start"}
+        }
+      }
+    },
+    {
+      "name": "layer_1_marks",
+      "type": "text",
+      "style": ["text"],
+      "from": {"data": "data_0"},
+      "encode": {
+        "update": {
+          "radius": {"value": 85},
+          "fontSize": {"value": 13},
+          "fill": {"value": "black"},
+          "tooltip": {
+            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Forest Area Porpotion(%)\": format(datum[\"sum_percent\"], \".2f\")}"
+          },
+          "description": {
+            "signal": "\"Sum of percent: \" + (format(datum[\"sum_percent\"], \"\")) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Forest Area Porpotion(%): \" + (format(datum[\"sum_percent\"], \".2f\"))"
+          },
+          "x": {"signal": "width", "mult": 0.5},
+          "y": {"signal": "height", "mult": 0.5},
+          "text": {"signal": "format(datum[\"sum_percent\"], \".2f\")"},
+          "align": {"value": "center"},
+          "baseline": {"value": "middle"},
+          "theta": {
+            "signal": "scale(\"theta\", 0.5 * datum[\"sum_percent_start\"] + 0.5 * datum[\"sum_percent_end\"])"
+          }
+        }
+      }
+    }
+  ],
+  "scales": [
+    {
+      "name": "theta",
+      "type": "linear",
+      "domain": {
+        "fields": [
+          {"data": "data_1", "field": "sum_percent_start"},
+          {"data": "data_1", "field": "sum_percent_end"},
+          {"data": "data_0", "field": "sum_percent_start"},
+          {"data": "data_0", "field": "sum_percent_end"}
+        ]
+      },
+      "range": [0, 6.283185307179586],
+      "zero": true
+    },
+    {
+      "name": "color",
+      "type": "ordinal",
+      "domain": {"data": "data_1", "field": "Continent", "sort": true},
+      "range": {"scheme": "set2"}
+    }
+  ],
+  "legends": [{"fill": "color", "symbolType": "circle", "title": "Continent"}],
+  "config": {}
+}
