@@ -43,6 +43,7 @@
     </div>
     <!-- end pure grid group -->
     
+    
     <!-- pure grid group -->
     <div class="pure-g">
       <div class="pure-u-1-1">
@@ -69,10 +70,11 @@
     </div>  
     <!-- end pure grid group -->
 
+    
     <!-- pure grid group -->
     <div class="pure-g">
       <div class="pure-u-1-1">
-        <h2>Forest Coverage in the 10 most populous Countries</h2>
+        <h2>Forest Coverage in 10 Most Populous Countries</h2>
       </div>
     </div>
     <!-- end pure grid group -->
@@ -92,6 +94,83 @@
     </div>
     <!-- end pure grid group -->
 
+    
+    
+     <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h2>Forest Area of 10 Least Populous Countries</h2>
+      </div>
+    </div>
+    <!-- end pure grid group -->    
+  
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-3-5">
+        <div id="country_least" class="vis-container"></div>
+      </div>
+      <div class="pure-u-2-5">
+        <div class="description-right">
+          <p class="description2"><br><br><br>For this bar graph, we can select the year to observe and can find that <b>Palau </b> 
+            has the <b>largest</b> forest area and <b>Tuvalu</b> has the <b>smallest</b> forest area among the
+            <b> 10 least populous countries</b> between <b>1991</b> to <b>2020</b>.</p>
+            
+        </div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+    
+    
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h2>Forest Area of 10 Largest Countries</h2>
+      </div>
+    </div>
+    <!-- end pure grid group -->    
+  
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-3-5">
+        <div id="largest_country" class="vis-container"></div>
+      </div>
+      <div class="pure-u-2-5">
+        <div class="description-right">
+          <p class="description2"><br><br><br>For this bar graph, we can select the year to observe and can find that <b>Russia </b> 
+            has the <b>largest</b> forest area and  <b>Algeria</b> has the <b>smallest</b> forest area among the
+            <b> 10 largest countries</b> between <b>1990</b> to <b>2020</b>.</p>
+           
+        </div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+    
+    
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-1-1">
+        <h2>Forest Area Porpotion of Continent</h2>
+      </div>
+    </div>
+    <!-- end pure grid group -->    
+  
+    <!-- pure grid group -->
+    <div class="pure-g">
+      <div class="pure-u-3-5">
+        <div id="pie" class="vis-container"></div>
+      </div>
+      <div class="pure-u-2-5">
+        <div class="description-right">
+          <p class="description2"><br><br><br>For this pie chart, we can select the year to observe and can find that <b>Europe </b> 
+            has the <b>largest</b> forest area and <b>Oceania</b> has the <b>smallest</b> forest area among the <b>continents </b>
+            between <b>1990</b> to <b>2020</b>.
+             </p>
+        </div>
+      </div>
+    </div>
+    <!-- end pure grid group -->
+    
+    
     <!-- pure grid group -->
     <div class="pure-g">
       <div class="pure-u-1-1">
@@ -99,7 +178,7 @@
       </div>
     </div>
     <!-- end pure grid group -->    
-    
+  
     <!-- pure grid group -->
     <div class="pure-g">
       <div class="pure-u-3-5">
@@ -107,14 +186,15 @@
       </div>
       <div class="pure-u-2-5">
         <div class="description-right">
-          <p class="description2"><br><br><br>For this bar graph, we can select the year to observe and can find that <b>South America's</b> 
+          <p class="description2"><br><br><br>For this bar graph, we can select the year to observe and can find that <b>South America's </b> 
             forest area was decreased the most and Asia's forest area was increased the most between <b>1990</b> to <b>2020</b>.
-            Furthermore, <b>Europe</b> has the <b>largest</b> forest area from <b>1990</b> to <b>2020</b>.</p>
+            Furthermore, <b>Europe</b> has the <b>largest</b> forest area from <b>1990</b> to <b>2020</b>.</p>                    
         </div>
       </div>
     </div>
     <!-- end pure grid group -->
 
+    
     <!-- pure grid group -->
     <div class="pure-g">
       <div class="pure-u-1-1">
@@ -155,6 +235,9 @@
     var specVis2 = "visualization2.vg.json";
     var specVis3 = "visualization3.vg.json";
     var specVis4 = "visualization4.vg.json";
+    var specVis5 = "visualization5.vg.json";
+    var specVis6 = "visualization6.vg.json";
+    var specVis7 = "visualization7.vg.json";
 
     vegaEmbed('#choropleth_map', specVis1, { "actions": false }).then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
@@ -164,11 +247,23 @@
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#bar', specVis3, { "actions": false }).then(function (result) {
+    vegaEmbed('#country_least', specVis3, { "actions": false }).then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
 
-    vegaEmbed('#line', specVis4, { "actions": false }).then(function (result) {
+    vegaEmbed('#largest_country', specVis4, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+    
+     vegaEmbed('#pie', specVis5, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#bar', specVis6, { "actions": false }).then(function (result) {
+      // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
+    }).catch(console.error);
+
+    vegaEmbed('#line', specVis7, { "actions": false }).then(function (result) {
       // Access the Vega view instance (https://vega.github.io/vega/docs/api/view/) as result.view
     }).catch(console.error);
   </script>
