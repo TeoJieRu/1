@@ -7,6 +7,8 @@
   "height": 260,
   "style": "cell",
   "data": [
+    {"name": "highlight_store"},
+    {"name": "select_store"},
     {
       "name": "source_0",
       "url": "https://raw.githubusercontent.com/TeoJieRu/Visualisation2/main/forest/use2.csv",
@@ -16,6 +18,7 @@
         "delimiter": ","
       },
       "transform": [
+        {"type": "identifier", "as": "_vgsid_"},
         {
           "type": "formula",
           "expr": "datum.Area*datum.Coverage/100",
@@ -32,7 +35,8 @@
           "ops": ["sum"],
           "fields": ["forest_area"],
           "as": ["sum_area"]
-        }
+        },
+        {"type": "identifier", "as": "_vgsid_"}
       ]
     },
     {
@@ -47,9 +51,45 @@
           "as": ["sum_sum_area"]
         }
       ]
+    },
+    {
+      "name": "data_1",
+      "source": "data_0",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"sum_area\"]) && isFinite(+datum[\"sum_area\"])"
+        }
+      ]
+    },
+    {
+      "name": "data_2",
+      "source": "data_0",
+      "transform": [
+        {"type": "identifier", "as": "_vgsid_"},
+        {
+          "type": "filter",
+          "expr": "isValid(datum[\"sum_area\"]) && isFinite(+datum[\"sum_area\"])"
+        }
+      ]
     }
   ],
   "signals": [
+    {
+      "name": "unit",
+      "value": {},
+      "on": [
+        {"events": "mousemove", "update": "isTuple(group()) ? group() : unit"}
+      ]
+    },
+    {
+      "name": "highlight",
+      "update": "vlSelectionResolve(\"highlight_store\", \"union\", true, true)"
+    },
+    {
+      "name": "select",
+      "update": "vlSelectionResolve(\"select_store\", \"union\", true, true)"
+    },
     {
       "name": "Year_selection",
       "value": 2020,
@@ -60,6 +100,76 @@
         "step": 1,
         "name": "Year :"
       }
+    },
+    {
+      "name": "highlight_tuple",
+      "on": [
+        {
+          "events": [{"source": "scope", "type": "mouseover"}],
+          "update": "datum && item().mark.marktype !== 'group' ? {unit: \"layer_0\", fields: highlight_tuple_fields, values: [(item().isVoronoi ? datum.datum : datum)[\"_vgsid_\"]]} : null",
+          "force": true
+        },
+        {"events": [{"source": "view", "type": "dblclick"}], "update": "null"}
+      ]
+    },
+    {
+      "name": "highlight_tuple_fields",
+      "value": [{"type": "E", "field": "_vgsid_"}]
+    },
+    {
+      "name": "highlight_toggle",
+      "value": false,
+      "on": [
+        {
+          "events": [{"source": "scope", "type": "mouseover"}],
+          "update": "event.shiftKey"
+        },
+        {"events": [{"source": "view", "type": "dblclick"}], "update": "false"}
+      ]
+    },
+    {
+      "name": "highlight_modify",
+      "on": [
+        {
+          "events": {"signal": "highlight_tuple"},
+          "update": "modify(\"highlight_store\", highlight_toggle ? null : highlight_tuple, highlight_toggle ? null : true, highlight_toggle ? highlight_tuple : null)"
+        }
+      ]
+    },
+    {
+      "name": "select_tuple",
+      "on": [
+        {
+          "events": [{"source": "scope", "type": "click"}],
+          "update": "datum && item().mark.marktype !== 'group' ? {unit: \"layer_0\", fields: select_tuple_fields, values: [(item().isVoronoi ? datum.datum : datum)[\"_vgsid_\"]]} : null",
+          "force": true
+        },
+        {"events": [{"source": "view", "type": "dblclick"}], "update": "null"}
+      ]
+    },
+    {
+      "name": "select_tuple_fields",
+      "value": [{"type": "E", "field": "_vgsid_"}]
+    },
+    {
+      "name": "select_toggle",
+      "value": false,
+      "on": [
+        {
+          "events": [{"source": "scope", "type": "click"}],
+          "update": "event.shiftKey"
+        },
+        {"events": [{"source": "view", "type": "dblclick"}], "update": "false"}
+      ]
+    },
+    {
+      "name": "select_modify",
+      "on": [
+        {
+          "events": {"signal": "select_tuple"},
+          "update": "modify(\"select_store\", select_toggle ? null : select_tuple, select_toggle ? null : true, select_toggle ? select_tuple : null)"
+        }
+      ]
     }
   ],
   "marks": [
@@ -67,12 +177,42 @@
       "name": "layer_0_marks",
       "type": "rect",
       "style": ["bar"],
-      "from": {"data": "data_0"},
+      "interactive": true,
+      "from": {"data": "data_2"},
       "encode": {
         "update": {
           "fill": [
             {"test": "datum.sum_area >= 8000000 ", "value": "red"},
             {"value": "gray"}
+          ],
+          "stroke": [
+            {
+              "test": "length(data(\"select_store\")) && vlSelectionTest(\"select_store\", datum)",
+              "value": "black"
+            },
+            {
+              "test": "length(data(\"highlight_store\")) && vlSelectionTest(\"highlight_store\", datum)",
+              "value": "black"
+            },
+            {"value": "grey"}
+          ],
+          "fillOpacity": [
+            {
+              "test": "!length(data(\"select_store\")) || vlSelectionTest(\"select_store\", datum)",
+              "value": 1
+            },
+            {"value": 0.3}
+          ],
+          "strokeWidth": [
+            {
+              "test": "length(data(\"select_store\")) && vlSelectionTest(\"select_store\", datum)",
+              "value": 2.2
+            },
+            {
+              "test": "length(data(\"highlight_store\")) && vlSelectionTest(\"highlight_store\", datum)",
+              "value": 1.5
+            },
+            {"value": 0.3}
           ],
           "tooltip": {
             "signal": "{\"Country\": isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"], \"Forest Area (km2)\": format(datum[\"sum_sum_area\"], \".2d\")}"
@@ -81,13 +221,7 @@
           "description": {
             "signal": "\"sum_area: \" + (format(datum[\"sum_area\"], \"\")) + \"; Country: \" + (isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"]) + \"; Forest Area (km2): \" + (format(datum[\"sum_sum_area\"], \".2d\"))"
           },
-          "x": [
-            {
-              "test": "!isValid(datum[\"sum_area\"]) || !isFinite(+datum[\"sum_area\"])",
-              "value": 0
-            },
-            {"scale": "x", "field": "sum_area"}
-          ],
+          "x": {"scale": "x", "field": "sum_area"},
           "x2": {"scale": "x", "value": 0},
           "y": {"scale": "y", "field": "Country"},
           "height": {"scale": "y", "band": 1}
@@ -98,12 +232,13 @@
       "name": "layer_1_marks",
       "type": "text",
       "style": ["text"],
-      "from": {"data": "data_0"},
+      "interactive": true,
+      "from": {"data": "data_1"},
       "encode": {
         "update": {
           "align": {"value": "left"},
           "baseline": {"value": "alphabetic"},
-          "fontSize": {"value": 12.5},
+          "fontSize": {"value": 11.5},
           "fill": {"value": "black"},
           "tooltip": {
             "signal": "{\"Country\": isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"], \"Forest Area (km2)\": format(datum[\"sum_sum_area\"], \".2d\")}"
@@ -111,13 +246,7 @@
           "description": {
             "signal": "\"sum_area: \" + (format(datum[\"sum_area\"], \"\")) + \"; Country: \" + (isValid(datum[\"Country\"]) ? datum[\"Country\"] : \"\"+datum[\"Country\"]) + \"; Forest Area (km2): \" + (format(datum[\"sum_sum_area\"], \".2d\"))"
           },
-          "x": [
-            {
-              "test": "!isValid(datum[\"sum_area\"]) || !isFinite(+datum[\"sum_area\"])",
-              "value": 0
-            },
-            {"scale": "x", "field": "sum_area"}
-          ],
+          "x": {"scale": "x", "field": "sum_area"},
           "y": {"scale": "y", "field": "Country", "band": 0.5},
           "text": {"signal": "format(datum[\"sum_area\"], \".2d\")"}
         }
@@ -128,7 +257,12 @@
     {
       "name": "x",
       "type": "linear",
-      "domain": {"data": "data_0", "field": "sum_area"},
+      "domain": {
+        "fields": [
+          {"data": "data_2", "field": "sum_area"},
+          {"data": "data_1", "field": "sum_area"}
+        ]
+      },
       "range": [0, {"signal": "width"}],
       "nice": true,
       "zero": true
