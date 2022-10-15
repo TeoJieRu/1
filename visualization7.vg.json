@@ -166,7 +166,6 @@
     {
       "name": "y",
       "type": "linear",
-      "domain": [40000000, 45000000],
       "range": [{"signal": "height"}, 0],
       "zero": false
     }
