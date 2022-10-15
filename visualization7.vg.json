@@ -4,6 +4,7 @@
   "padding": 5,
   "width": 460,
   "height": 220,
+  "title": {"text": "Forest Area in World", "frame": "group"},
   "style": "cell",
   "data": [
     {
@@ -166,8 +167,9 @@
     {
       "name": "y",
       "type": "linear",
+      "domain": [0, 50000000],
       "range": [{"signal": "height"}, 0],
-      "zero": false
+      "zero": true
     }
   ],
   "axes": [
