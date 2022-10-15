@@ -39,6 +39,9 @@ h1 {
     padding-left: 20px;
 }
 
+.description-left {
+    padding-right: 20px;
+}
 
 .pure-g {
     margin-bottom: 40px;
