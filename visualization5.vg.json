@@ -217,7 +217,7 @@
             {"value": 0.3}
           ],
           "tooltip": {
-            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Forest Area Porpotion(%)\": format(datum[\"sum_percent\"], \".2f\")}"
+            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Forest Area Percentage(%)\": format(datum[\"sum_percent\"], \".2f\")}"
           },
           "description": {
             "signal": "\"Sum of percent: \" + (format(datum[\"sum_percent\"], \"\")) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Forest Area Porpotion(%): \" + (format(datum[\"sum_percent\"], \".2f\"))"
@@ -242,7 +242,7 @@
           "fontSize": {"value": 13},
           "fill": {"value": "black"},
           "tooltip": {
-            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Forest Area Porpotion(%)\": format(datum[\"sum_percent\"], \".2f\")}"
+            "signal": "{\"Continent\": isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"], \"Forest Area Percentage(%)\": format(datum[\"sum_percent\"], \".2f\")}"
           },
           "description": {
             "signal": "\"Sum of percent: \" + (format(datum[\"sum_percent\"], \"\")) + \"; Continent: \" + (isValid(datum[\"Continent\"]) ? datum[\"Continent\"] : \"\"+datum[\"Continent\"]) + \"; Forest Area Porpotion(%): \" + (format(datum[\"sum_percent\"], \".2f\"))"
