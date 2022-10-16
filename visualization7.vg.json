@@ -3,7 +3,7 @@
   "background": "white",
   "padding": 5,
   "width": 460,
-  "height": 320,
+  "height": 220,
   "title": {"text": "Forest Area in World", "frame": "group"},
   "style": "cell",
   "data": [
